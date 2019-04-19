@@ -21,7 +21,25 @@ pressao_freio = 0
 # Função que retorna três valores de pertinência
 # para os conjuntos 'alta', 'média' e 'baixa'//
 def pressaoFreio(pres_pedal):
-    
+
+    pert_alta = 0
+    pert_media = 0
+    pert_baixa = 0
+
+    # alta
+    if pres_pedal < 50:
+        pert_alta = 0
+        print('Alta: {%d, 0}' % (pres_pedal))
+    elif pres_pedal == 50 or pres_pedal > 50:
+        pert_alta =  (pres_pedal / 50) - 1
+        print('Alta: {%d, %f}' % (pres_pedal, pert_alta))
+
+    # baixa
+    if pres_pedal < 30:
+        pert_media = 0
+        print('Média: {%d, 0}' % (pres_pedal))
+    elif
+
 
 
 
