@@ -12,9 +12,6 @@ pressao_pedal = randint(0,100)
 velocidade_roda = randint(0,100)
 velocidade_carro = randint(0,100)
 
-# Variável de saída
-pressao_freio = 0
-
 # Funções de pertinência dos conjuntos nebulosos
 
 # PRESSÃO NO FREIO
@@ -88,8 +85,7 @@ def velocidade(velo):
 
 
 # Recebe os valores de pressão no pedal de freio, a velociade do carro
-# e a velociade da roda. Retorna dois valores, uma para aperte o freio
-# e outro para libere o freio
+# e a velociade da roda. Retorna o valor que deve ser aplicado no freio
 def  inf_de_Mamdani(pedal, roda, carro):
 
     pedal_alta, pedal_media, pedal_baixa = pressaoFreio(pedal)
@@ -138,13 +134,25 @@ def  inf_de_Mamdani(pedal, roda, carro):
             f2 = libera_freio
 
         list_uniao_funcoes.append(max(f1,f2))
-        print('f1 = %8.3f  \nf2 = %8.3f \nlist_uniao_funcoes[%d] = %8.3f' % (f1, f2, cont, list_uniao_funcoes[cont]))
+        #print('f1 = %8.3f  \nf2 = %8.3f \nlist_uniao_funcoes[%d] = %8.3f' % (f1, f2, cont, list_uniao_funcoes[cont]))
 
         cont += 1
 
+    #controle do laço
+    cont = 0
+    sum1 = 0
+    sum2 = 0
+    #saída do algoritmo
+    pressao_no_freio = 0
+    # Cálculo do centro de gravidade
+    while cont < 101:
+        sum1 += list_uniao_funcoes[cont] * cont
+        sum2 += list_uniao_funcoes[cont]
+        cont += 1
 
-    return regra_1, regra_2, regra_3, regra_4
+    pressao_no_freio = sum1 / sum2
+    return pressao_no_freio
 
-aperta_1, aperta_2, solta_1, solta_2 = inf_de_Mamdani(60, 55, 80)
-print('Pressão pedal: %d\nVelocidade roda: %d\nVelocidade carro: %d\n' % (pressao_pedal, velocidade_roda, velocidade_carro))
-print('Regra 1: %8.3f \nRegra 2: %8.3f \nRegra 3: %8.3f\nRegra 4: %8.3f' % (aperta_1,aperta_2,solta_1, solta_2))
+
+pressao_freio = inf_de_Mamdani(pressao_pedal, velocidade_roda, velocidade_carro)
+print('A pressão a ser aplicada (aproximadamente) = %8.3f' % (pressao_freio))
