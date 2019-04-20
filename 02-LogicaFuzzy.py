@@ -133,6 +133,7 @@ def  inf_de_Mamdani(pedal, roda, carro):
         else:
             f2 = libera_freio
 
+        # União da 'área' das duas funções
         list_uniao_funcoes.append(max(f1,f2))
         #print('f1 = %8.3f  \nf2 = %8.3f \nlist_uniao_funcoes[%d] = %8.3f' % (f1, f2, cont, list_uniao_funcoes[cont]))
 
@@ -140,10 +141,13 @@ def  inf_de_Mamdani(pedal, roda, carro):
 
     #controle do laço
     cont = 0
+
     sum1 = 0
     sum2 = 0
-    #saída do algoritmo
+
+    # variável de saída do algoritmo
     pressao_no_freio = 0
+
     # Cálculo do centro de gravidade
     while cont < 101:
         sum1 += list_uniao_funcoes[cont] * cont
@@ -155,4 +159,4 @@ def  inf_de_Mamdani(pedal, roda, carro):
 
 
 pressao_freio = inf_de_Mamdani(pressao_pedal, velocidade_roda, velocidade_carro)
-print('A pressão a ser aplicada (aproximadamente) = %8.3f' % (pressao_freio))
+print('Pressão no pedal: %d \nVelocidade da roda: %d \nVelocidade do carro: %d \nA pressão a ser aplicada (aproximadamente) = %8.3f' % (pressao_pedal, velocidade_roda, velocidade_carro, pressao_freio))
