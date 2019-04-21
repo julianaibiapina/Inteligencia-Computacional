@@ -65,10 +65,85 @@ print('R_2 = %8.3f' % (R_2))
 
 
 #Exibe a disperção dos dados num gráfico (x,y)
-plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-plt.scatter(teste[0:, 0:1], teste[0:, 1:]) # regressão
-plt.ylabel('Potência')
-plt.xlabel('Velocidade do Vento')
+# plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+# plt.scatter(teste[0:, 0:1], teste[0:, 1:]) # regressão
+# plt.ylabel('Potência')
+# plt.xlabel('Velocidade do Vento')
 #plt.show()
 
 # REGRESSÃO MÚLTIPLA
+
+# Cria as matrizes X's, cujos valores são [x, x^2], [x, x^2, x^3], [x, x^2, x^3, x^4] e [x, x^2, x^3, x^4, x^5]
+
+list_linhas = list()
+list_matrix1 = list()
+list_matrix2 = list()
+list_matrix3 = list()
+list_matrix4 = list()
+
+x_2 = 0
+x_3 = 0
+x_4 = 0
+x_5 = 0
+
+for aux in x:
+    x_2 = aux[0] ** 2
+    x_3 = aux[0] ** 3
+    x_4 = aux[0] ** 4
+    x_5 = aux[0] ** 5
+
+    # Para matrix X1 - polinômio de grau dois
+    list_linhas = [1, aux[0], x_2]
+    list_matrix1.append(list_linhas)
+
+    # Para matrix X2 - polinômio de grau três
+    list_linhas = [1, aux[0], x_2, x_3]
+    list_matrix2.append(list_linhas)
+
+    # Para matrix X3 - polinômio de grau quatro
+    list_linhas = [1, aux[0], x_2, x_3, x_4]
+    list_matrix3.append(list_linhas)
+
+    # Para matrix X4 - polinômio de grau cinco
+    list_linhas = [1, aux[0], x_2, x_3, x_4, x_5]
+    list_matrix4.append(list_linhas)
+
+
+matrix_y = np.matrix(y)
+matrix1 = np.matrix(list_matrix1) # Matriz X1 para polinômio de grau 2
+matrix2 = np.matrix(list_matrix2) # Matriz X2 para polinômio de grau 3
+matrix3 = np.matrix(list_matrix3) # Matriz X3 para polinômio de grau 4
+matrix4 = np.matrix(list_matrix4) # Matriz X4 para polinômio de grau 5
+
+
+# Regressão polinomial de grau 2
+x_transposta = matrix1.transpose()
+mult = np.matmul(x_transposta, matrix1)
+inversa_mult =  np.linalg.inv(mult)
+intermediario = np.matmul(inversa_mult, x_transposta)
+B_poli2 = np.matmul(intermediario, y)
+
+# Resultado da regressão polinomial de ordem dois
+y_poli2 = np.matmul(matrix1, B_poli2)
+print(y_poli2[0:,0:1])
+print(matrix1[0:, 1:2])
+
+
+#Exibe a disperção dos dados num gráfico (x,y)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='green')              # regressão
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.show()
+
+
+# # Regressão polinomial de grau 2
+# x_transposta = matrix1.transpose()
+# mult = np.matmul(x_transposta, matrix1)
+# inversa_mult =  np.linalg.inv(mult)
+# intermediario = np.matmul(inversa_mult, x_transposta)
+# B_poli2 = np.matmul(intermediario, y)
+#
+# # Resultado da regressão polinomial de ordem dois
+# y_poli2 = np.matmul(matrix1, B_poli2)
+# print(y_poli2)
