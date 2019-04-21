@@ -136,7 +136,7 @@ y_poli5 = np.matmul(matrix4, B_poli5)
 
 
 # Cálculo de R^2
-print('Cálculo do coeficiente de determinação')
+print('--> Cálculo do coeficiente de determinação e do coeficiente de determinação ajustado')
 
 # variáveis auxiliares
 soma1 = 0
@@ -158,7 +158,8 @@ for aux1,aux2 in itertools.zip_longest(y, y_poli2):
     soma1 += (aux1 - aux2) ** 2
     soma2 += (aux1 - media_y) ** 2
 R_2_grau2 = 1 - (soma1 / soma2)
-print('Regressão Polinomial de grau 2 \n  R_2 = %f' % (R_2_grau2))
+R_2_grau2_ajustado = 1 - ((soma1 / (n - 3) ) / (soma2 / (n - 1))) # k = 2
+print('Regressão Polinomial de grau 2 \n  R_2 = %f \n  R_2_ajustado = %f' % (R_2_grau2, R_2_grau2_ajustado))
 
 # regressão polinomial grau 3
 R_2_grau3 = 0
@@ -168,7 +169,8 @@ for aux1,aux2 in itertools.zip_longest(y, y_poli3):
     soma1 += (aux1 - aux2) ** 2
     soma2 += (aux1 - media_y) ** 2
 R_2_grau3 = 1 - (soma1 / soma2)
-print('Regressão Polinomial de grau 3 \n  R_2 = %f' % (R_2_grau3))
+R_2_grau3_ajustado = 1 - ((soma1 / (n - 4) ) / (soma2 / (n - 1))) # k = 3
+print('Regressão Polinomial de grau 3 \n  R_2 = %f \n  R_2_ajustado = %f' % (R_2_grau3, R_2_grau3_ajustado))
 
 # regressão polinomial grau 4
 R_2_grau4 = 0
@@ -178,7 +180,8 @@ for aux1,aux2 in itertools.zip_longest(y, y_poli4):
     soma1 += (aux1 - aux2) ** 2
     soma2 += (aux1 - media_y) ** 2
 R_2_grau4 = 1 - (soma1 / soma2)
-print('Regressão Polinomial de grau 4 \n  R_2 = %f' % (R_2_grau4))
+R_2_grau4_ajustado = 1 - ((soma1 / (n - 5) ) / (soma2 / (n - 1))) # k = 4
+print('Regressão Polinomial de grau 4 \n  R_2 = %f \n  R_2_ajustado = %f' % (R_2_grau4, R_2_grau4_ajustado))
 
 # regressão polinomial grau 5
 R_2_grau5 = 0
@@ -188,19 +191,13 @@ for aux1,aux2 in itertools.zip_longest(y, y_poli5):
     soma1 += (aux1 - aux2) ** 2
     soma2 += (aux1 - media_y) ** 2
 R_2_grau5 = 1 - (soma1 / soma2)
-print('Regressão Polinomial de grau 5 \n  R_2 = %f' % (R_2_grau5))
+R_2_grau5_ajustado = 1 - ((soma1 / (n - 6) ) / (soma2 / (n - 1))) # k = 5
+print('Regressão Polinomial de grau 5 \n  R_2 = %f \n  R_2_ajustado = %f' % (R_2_grau5, R_2_grau5_ajustado))
+
+
 
 
 #Exibe os dados num gráfico (x,y)
-# plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-# plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão linear
-# plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão polinomial grau 2
-# plt.plot(matrix2[0:, 1:2], y_poli3[0:,0:1], color='green')  # regressão polinomial grau 3
-# plt.plot(matrix3[0:, 1:2], y_poli4[0:,0:1], color='red')  # regressão polinomial grau 4
-# plt.plot(matrix4[0:, 1:2], y_poli5[0:,0:1], color='cyan')  # regressão polinomial grau 5
-# plt.ylabel('Potência')
-# plt.xlabel('Velocidade do Vento')
-# plt.show()
 
 # Linear
 plt.figure(1)
