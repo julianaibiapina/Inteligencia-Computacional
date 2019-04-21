@@ -66,10 +66,10 @@ print('R_2 = %8.3f' % (R_2))
 
 #Exibe a disperção dos dados num gráfico (x,y)
 # plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-# plt.scatter(teste[0:, 0:1], teste[0:, 1:]) # regressão
+plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão
 # plt.ylabel('Potência')
 # plt.xlabel('Velocidade do Vento')
-#plt.show()
+# plt.show()
 
 # REGRESSÃO MÚLTIPLA
 
@@ -131,19 +131,7 @@ print(matrix1[0:, 1:2])
 
 #Exibe a disperção dos dados num gráfico (x,y)
 plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='green')              # regressão
+plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
 plt.show()
-
-
-# # Regressão polinomial de grau 2
-# x_transposta = matrix1.transpose()
-# mult = np.matmul(x_transposta, matrix1)
-# inversa_mult =  np.linalg.inv(mult)
-# intermediario = np.matmul(inversa_mult, x_transposta)
-# B_poli2 = np.matmul(intermediario, y)
-#
-# # Resultado da regressão polinomial de ordem dois
-# y_poli2 = np.matmul(matrix1, B_poli2)
-# print(y_poli2)
