@@ -34,8 +34,6 @@ media_y = t2 / n
 media_x = t3 / n
 B_0 = media_y - (B_1 * media_x)
 
-print('B_0 = %8.3f' % (B_0))
-print('B_1 = %8.3f' % (B_1))
 
 list_linhas = list()
 list_matrix = list()
@@ -48,28 +46,8 @@ for aux in x:
 
 
 teste = np.array(list_matrix)
-#print(teste)
-#print(data)
-
-# Cálculo de R^2
-R_2 = 0
-soma1 = 0
-soma2 = 0
-for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
-    soma1 += (aux1 - aux2) ** 2
-    soma2 += (aux1 - media_y) ** 2
-R_2 = 1 - (soma1 / soma2)
-print('R_2 = %8.3f' % (R_2))
 
 
-
-
-#Exibe a disperção dos dados num gráfico (x,y)
-# plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão
-# plt.ylabel('Potência')
-# plt.xlabel('Velocidade do Vento')
-# plt.show()
 
 # REGRESSÃO MÚLTIPLA
 
@@ -121,17 +99,70 @@ x_transposta = matrix1.transpose()
 mult = np.matmul(x_transposta, matrix1)
 inversa_mult =  np.linalg.inv(mult)
 intermediario = np.matmul(inversa_mult, x_transposta)
+# Resultado da regressão polinomial de grau dois
 B_poli2 = np.matmul(intermediario, y)
-
-# Resultado da regressão polinomial de ordem dois
 y_poli2 = np.matmul(matrix1, B_poli2)
-print(y_poli2[0:,0:1])
-print(matrix1[0:, 1:2])
 
 
-#Exibe a disperção dos dados num gráfico (x,y)
+# Regressão polinomial de grau três
+x_transposta = matrix2.transpose()
+mult = np.matmul(x_transposta, matrix2)
+inversa_mult = np.linalg.inv(mult)
+intermediario = np.matmul(inversa_mult, x_transposta)
+# Resultado da regressão polinomial de grau três
+B_poli3 = np.matmul(intermediario, y)
+y_poli3 = np.matmul(matrix2, B_poli3)
+
+
+# Regressão polinomial de grau quatro
+x_transposta = matrix3.transpose()
+mult = np.matmul(x_transposta, matrix3)
+inversa_mult = np.linalg.inv(mult)
+intermediario = np.matmul(inversa_mult, x_transposta)
+# Resultado da regressão polinomial de grau quatro
+B_poli4 = np.matmul(intermediario, y)
+y_poli4 = np.matmul(matrix3, B_poli4)
+
+
+# Regressão polinomial de grau cinco
+x_transposta = matrix4.transpose()
+mult = np.matmul(x_transposta, matrix4)
+inversa_mult = np.linalg.inv(mult)
+intermediario = np.matmul(inversa_mult, x_transposta)
+# Resultado da regressão polinomial de grau cinco
+B_poli5 = np.matmul(intermediario, y)
+y_poli5 = np.matmul(matrix4, B_poli5)
+
+
+# Cálculo de R^2
+
+# variáveis auxiliares
+soma1 = 0
+soma2 = 0
+
+# regressão linear
+R_2_linear = 0
+for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2_linear = 1 - (soma1 / soma2)
+print('R_2 = %8.3f' % (R_2_linear))
+
+# regressão polinomial grau 2
+R_2_grau2 = 0
+for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
+
+
+
+
+    
+#Exibe os dados num gráfico (x,y)
 plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão
+plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão linear
+plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão polinomial grau 2
+plt.plot(matrix2[0:, 1:2], y_poli3[0:,0:1], color='green')  # regressão polinomial grau 3
+plt.plot(matrix3[0:, 1:2], y_poli4[0:,0:1], color='red')  # regressão polinomial grau 4
+plt.plot(matrix4[0:, 1:2], y_poli5[0:,0:1], color='cyan')  # regressão polinomial grau 5
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
 plt.show()
