@@ -46,17 +46,29 @@ for aux in x:
     list_linhas = [aux[0], new_value[0]]
     list_matrix.append(list_linhas)
 
-#print(list_x)
+
 teste = np.array(list_matrix)
-print(teste)
-print(data)
+#print(teste)
+#print(data)
+
+# Cálculo de R^2
+R_2 = 0
+soma1 = 0
+soma2 = 0
+for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2 = 1 - (soma1 / soma2)
+print('R_2 = %8.3f' % (R_2))
+
+
 
 
 #Exibe a disperção dos dados num gráfico (x,y)
-plt.scatter(data[0:, 0:1], data[0:, 1:])
-plt.scatter(teste[0:, 0:1], teste[0:, 1:])
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.scatter(teste[0:, 0:1], teste[0:, 1:]) # regressão
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
-plt.show()
+#plt.show()
 
 # REGRESSÃO MÚLTIPLA
