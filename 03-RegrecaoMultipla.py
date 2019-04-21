@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 import itertools
 
 data = np.loadtxt('aerogerador.dat')
@@ -135,6 +136,7 @@ y_poli5 = np.matmul(matrix4, B_poli5)
 
 
 # Cálculo de R^2
+print('Cálculo do coeficiente de determinação')
 
 # variáveis auxiliares
 soma1 = 0
@@ -146,23 +148,103 @@ for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
     soma1 += (aux1 - aux2) ** 2
     soma2 += (aux1 - media_y) ** 2
 R_2_linear = 1 - (soma1 / soma2)
-print('R_2 = %8.3f' % (R_2_linear))
+print('Regressão Linear \n  R_2 = %f' % (R_2_linear))
 
 # regressão polinomial grau 2
 R_2_grau2 = 0
-for aux1,aux2 in itertools.zip_longest(y, teste[0:, 1:]):
+soma1 = 0 # reinicia as variáveis
+soma2 = 0
+for aux1,aux2 in itertools.zip_longest(y, y_poli2):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2_grau2 = 1 - (soma1 / soma2)
+print('Regressão Polinomial de grau 2 \n  R_2 = %f' % (R_2_grau2))
+
+# regressão polinomial grau 3
+R_2_grau3 = 0
+soma1 = 0 # reinicia as variáveis
+soma2 = 0
+for aux1,aux2 in itertools.zip_longest(y, y_poli3):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2_grau3 = 1 - (soma1 / soma2)
+print('Regressão Polinomial de grau 3 \n  R_2 = %f' % (R_2_grau3))
+
+# regressão polinomial grau 4
+R_2_grau4 = 0
+soma1 = 0 # reinicia as variáveis
+soma2 = 0
+for aux1,aux2 in itertools.zip_longest(y, y_poli4):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2_grau4 = 1 - (soma1 / soma2)
+print('Regressão Polinomial de grau 4 \n  R_2 = %f' % (R_2_grau4))
+
+# regressão polinomial grau 5
+R_2_grau5 = 0
+soma1 = 0 # reinicia as variáveis
+soma2 = 0
+for aux1,aux2 in itertools.zip_longest(y, y_poli5):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R_2_grau5 = 1 - (soma1 / soma2)
+print('Regressão Polinomial de grau 5 \n  R_2 = %f' % (R_2_grau5))
 
 
-
-
-    
 #Exibe os dados num gráfico (x,y)
+# plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+# plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão linear
+# plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão polinomial grau 2
+# plt.plot(matrix2[0:, 1:2], y_poli3[0:,0:1], color='green')  # regressão polinomial grau 3
+# plt.plot(matrix3[0:, 1:2], y_poli4[0:,0:1], color='red')  # regressão polinomial grau 4
+# plt.plot(matrix4[0:, 1:2], y_poli5[0:,0:1], color='cyan')  # regressão polinomial grau 5
+# plt.ylabel('Potência')
+# plt.xlabel('Velocidade do Vento')
+# plt.show()
+
+# Linear
+plt.figure(1)
 plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
-plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'yellow') # regressão linear
-plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='magenta')  # regressão polinomial grau 2
-plt.plot(matrix2[0:, 1:2], y_poli3[0:,0:1], color='green')  # regressão polinomial grau 3
-plt.plot(matrix3[0:, 1:2], y_poli4[0:,0:1], color='red')  # regressão polinomial grau 4
-plt.plot(matrix4[0:, 1:2], y_poli5[0:,0:1], color='cyan')  # regressão polinomial grau 5
+plt.plot(teste[0:, 0:1], teste[0:, 1:], color = 'red') # regressão linear
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
+plt.title('Regressão Linear')
+plt.grid(True)
+
+# Polinomial grau 2
+plt.figure(2)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(matrix1[0:, 1:2], y_poli2[0:,0:1], color='red')  # regressão polinomial grau 2
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.title('Regressão Polinomial de Grau 2')
+plt.grid(True)
+
+# Polinomial grau 3
+plt.figure(3)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(matrix2[0:, 1:2], y_poli3[0:,0:1], color='red')  # regressão polinomial grau 3
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.title('Regressão Polinomial de Grau 3')
+plt.grid(True)
+
+# Polinomial grau 4
+plt.figure(4)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(matrix3[0:, 1:2], y_poli4[0:,0:1], color='red')  # regressão polinomial grau 4
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.title('Regressão Polinomial de Grau 4')
+plt.grid(True)
+
+# Polinomial grau 5
+plt.figure(5)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(matrix4[0:, 1:2], y_poli5[0:,0:1], color='red')  # regressão polinomial grau 5
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.title('Regressão Polinomial de Grau 5')
+plt.grid(True)
+
 plt.show()
