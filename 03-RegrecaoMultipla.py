@@ -7,6 +7,7 @@ data = np.loadtxt('aerogerador.dat')
 x = data[0:, 0:1] # velociade do vento
 y = data[0:, 1:]  # potência
 
+# REGRESSÃO LINEAR
 B_0 = 0
 B_1 = 0
 
@@ -57,3 +58,5 @@ plt.scatter(teste[0:, 0:1], teste[0:, 1:])
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
 plt.show()
+
+# REGRESSÃO MÚLTIPLA
