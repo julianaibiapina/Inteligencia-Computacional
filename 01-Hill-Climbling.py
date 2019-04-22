@@ -6,7 +6,7 @@ from random import uniform
 
 incremento = 0.01
 
-# Dois valores aleatótios para x e y
+# Dois valores reais aleatótios para x e y
 # pertencentes ao intervalo [0, 20]
 pontoInicial = [uniform(0,20), uniform(0,20)]
 
@@ -29,9 +29,11 @@ def novosVizinhos(p):
 
     return v1, v2, v3, v4
 
-# Retorna o ponto cujo falor da função é máximo e um valor booleano que informa
+# Retorna um ponto cujo falor da função é máximo e um valor booleano que informa
 # True se o ponto dado é um máximo local e False caso não seja.
 def otimiza(ponto, v1, v2, v3, v4 ):
+
+    # Calcula o valor da função para o ponto dado e para seus vizinhos
     f_p = f(ponto)
     f1 = f(v1)
     f2 = f(v2)
@@ -44,8 +46,11 @@ def otimiza(ponto, v1, v2, v3, v4 ):
 
     index_max = values.index(maximo)
 
+    # Avalia se o ponto dado tem um f(p) maior que de todos os seus vizinhos.
+    # Se sim, retorna o ponto e True. Se não, se o f(x,y) for máximo para algum dos
+    # vizinhos do ponto dado, retorna o ponto vizinho e False
     if index_max == 0:
-        return ponto, True # Nesse caso o algoritmo deve parar, pois ele é o máximo de todos os seus vizinhos
+        return ponto, True # Nesse caso o algoritmo deve parar, pois ele é o máximo em relação a todos os seus vizinhos
     elif index_max == 1:
         return v1, False
     elif index_max == 2:
@@ -56,6 +61,7 @@ def otimiza(ponto, v1, v2, v3, v4 ):
         return v4, False
 
 
+# Laço que se repete até que um máximo local seja encontrado
 controle_laco = False
 ponto_atual = pontoInicial
 while controle_laco == False:
@@ -63,7 +69,6 @@ while controle_laco == False:
     v_1, v_2, v_3, v_4 = novosVizinhos(ponto_atual)
 
     ponto_atual, controle_laco = otimiza(ponto_atual, v_1, v_2, v_3, v_4)
-    print('Ponto atual: [%s, %s] \n f(x,y) = %s' % (str(ponto_atual[0]), str(ponto_atual[1]), str(f(ponto_atual))))
+    print('f(%f,%f) = %f' % (ponto_atual[0], ponto_atual[1], f(ponto_atual)))
 
-print("Deu certo!!")
-print('Ponto inicial: [%s, %s]' % (str(pontoInicial[0]), str(pontoInicial[1])))
+print('\nPonto inicial: [%f, %f] \nMáximo local: f(%f, %f) = %f' % (pontoInicial[0], pontoInicial[1], ponto_atual[0], ponto_atual[1], f(ponto_atual)))
