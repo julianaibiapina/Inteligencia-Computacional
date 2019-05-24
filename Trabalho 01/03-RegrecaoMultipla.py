@@ -1,3 +1,6 @@
+# Autor: Juliana Franco Ibiapina
+# Inteligênica Computacional - 2019.1
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib

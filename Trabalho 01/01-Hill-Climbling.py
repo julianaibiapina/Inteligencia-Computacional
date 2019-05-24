@@ -1,3 +1,6 @@
+# Autor: Juliana Franco Ibiapina
+# Inteligênica Computacional - 2019.1
+
 # Implementação do algoritmo Hill Climbling, que acha o máximo local de uma dada função f(x, y)
 # onde x e y pertecem ao intervalo de 0 a 20
 

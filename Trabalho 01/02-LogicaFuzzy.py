@@ -1,3 +1,6 @@
+# Autor: Juliana Franco Ibiapina
+# Inteligênica Computacional - 2019.1
+
 from random import randint
 
 # Valores de entrada
