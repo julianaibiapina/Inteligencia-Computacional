@@ -16,16 +16,16 @@ def func_y(ax):
 x_1 = np.array([0, 0, 1, 1])
 x_2 = np.array([0, 1, 0, 1])
 # Saída: o resultado esperado
-d = np.array([0, 1, 1, 1])
+d = np.array([0, 1, 1, 0])
 
 # passo de aprendizagem
 n= 0.5
 
 # cria vetor de pesos e limiar
-w = np.zeros((2,3))
+w = np.array([0, 0, 0])
 
 cont = 0 # conta as iterações
-u = 0    # amazena os produtos ecalares de casa iteração
+u = 0    # amazena os produtos escalares de casa iteração
 aux = np.empty(3)
 y = np.zeros(d.shape[0])
 
@@ -37,13 +37,19 @@ while controle == False:
         # vetor de entrada x
         x = np.array([-1, x_1[i], x_2[i]])
 
-        u = np.dot(x.transpose(), w[cont]) # retorna um escalar
+        if cont == 0:
+            u = np.dot(x.transpose(), w)       # retorna um escalar
+        else:
+            u = np.dot(x.transpose(), w[cont]) # retorna um escalar
         y[i] = func_y(u)
         e = d[i] - y[i]
         #soma os elementos de posições correspondentes(axis=0 -> linha com linha)
-        aux = np.sum((w[cont], np.dot((n * e), x) ), axis=0)
+        if cont == 0:
+            aux = np.sum((w, np.dot((n * e), x) ), axis=0)
+        else:
+            aux = np.sum((w[cont], np.dot((n * e), x) ), axis=0)
         w = np.vstack((w,aux))
-        print(w[cont])
+        print(w)
         cont +=1
     # o laço 'while' só para quando o vetor 'y' for igual ao vetor esperado 'd'
     comp = 0
@@ -53,3 +59,14 @@ while controle == False:
     if comp == d.shape[0]:
         print(y)
         controle = True
+print('Pesos obtidos: ')
+print(w[w.shape[0]-1])
+
+# TESTANDO
+print('TESTE')
+vet_teste = np.array([-1, 0, 0])
+result = np.dot(w[w.shape[0]-1], vet_teste)
+if result>0:
+    print('1')
+elif result == 0 or result < 0:
+    print('0')
