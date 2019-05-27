@@ -16,7 +16,7 @@ def func_y(ax):
 x_1 = np.array([0, 0, 1, 1])
 x_2 = np.array([0, 1, 0, 1])
 # Saída: o resultado esperado
-d = np.array([0, 1, 1, 0])
+d = np.array([0, 1, 1, 1])
 
 # passo de aprendizagem
 n= 0.5
