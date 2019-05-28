@@ -6,46 +6,51 @@ import itertools
 
 data = np.loadtxt('./Trabalho 02/aerogerador.dat')
 x_treino = data[0:, 0:1] # velociade do vento
+x_treino = x_treino.reshape((1, 2250)) # transforma em um vetor de N colunas
+ones = np.ones(x_treino.shape)
+x_treino = np.vstack((ones, x_treino)) # acrescenta uma linha de 1's
 
 y_treino = data[0:, 1:]  # potência
+y_treino = y_treino.reshape((1, 2250)) # transforma em um vetor de N colunas
 
+#numero de neurônios da camada oculta
+q = 2
+p = 1 # número de variáveis de entrada
 
-# DOIS NEURÔNIOS NA CAMADA OCULTA
+# vetor de pesos da camada oculta
+W = np.random.rand(q, p+1) # matriz de pesos
 
-# Vetor de pesos inicial preenchido com valores aleatórios uniformente distribídos no intervalo [-1, 1)
-aux = [random.uniform(0, 1), random.uniform(0, 1)]
-W = np.array(aux) # matriz de pesos
-Z = np.array([[], []])  # matriz de saídas
-for i in range(0, x_treino.shape[0]):
-    x = x_treino[i]
-    u =  np.dot(W, x[0])
-    z = np.array([[(1 / (1 + (math.exp(-1 * u[0]))))], [(1 / (1 + (math.exp(-1 * u[1]))))]])
+# ativações dos neurônios da camada oculta
+u = np.matmul(W, x_treino)
+
+Z = np.array([[],[]])
+#percorrer todas as N colunas de u
+for i in range(0, u.shape[1]):
+    z = np.array([[(1 / (1 + (math.exp(-1 * u[0:1, i:i+1][0][0]))))], [(1 / (1 + (math.exp(-1 * u[1:2, i:i+1][0][0]))))]])
+    #print(z)
     Z = np.hstack((Z,z))
 
-# vetor D de saídas esperadas
-D = y_treino.reshape((1, 2250))
-
-# matriz M de pesos da camada de saída
-M = np.matmul(D,Z.transpose())
-M = np.matmul(M,np.linalg.inv(np.matmul(Z,Z.transpose())))
+# vetor Z que é a entrada da camada de saída
+ones = np.ones((1, Z.shape[1]))
+Z = np.vstack((ones, Z)) # acrescenta uma linha de 1's
 
 
-# O vetor Y guarda os valores y de saída da última camada para casa amostra
-Y_list = list()
-for i in range(0, x_treino.shape[0]):
+# vetor M de pesos da camada de saída
+aux = np.matmul(y_treino, Z.transpose())
+aux2 = np.linalg.inv(np.matmul(Z, Z.transpose()))
+M = np.matmul(aux, aux2)
 
-    input = Z[0:, i:(i+1)]
-    y = np.dot(M, input)[0][0]
-    Y_list.append(y)
-Y = np.array(Y_list)
-print(Y.shape)
-# plotando
+# vetor final com os resultados da camda de saída
+y = np.matmul(M,Z)
+
+
+# Gráfico
 plt.figure(1)
-plt.scatter(x_treino, y_treino)   # amostras
-plt.plot(x_treino, Y[0:], color = 'red') # regressão linear
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(data[0:, 0:1], y.transpose(), color = 'red') # rede neural
 plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
-plt.title('Teste')
+plt.title('Dois neurônios na camada oculta')
 plt.grid(True)
 
 plt.show()
