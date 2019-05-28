@@ -56,7 +56,6 @@ W = np.random.rand(q2, p+1) * 0.1 # matriz de pesos onde cada elemento varia num
 # ativações dos neurônios da camada oculta
 u = np.matmul(W, x_treino)
 
-
 Z = np.array([[],[]]) # dois neurônios
 #percorrer todas as N colunas de u
 for i in range(0, u.shape[1]):
