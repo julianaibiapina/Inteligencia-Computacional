@@ -2,7 +2,7 @@ import math
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-
+import itertools
 
 data = np.loadtxt('./Trabalho 02/aerogerador.dat')
 x_treino = data[0:, 0:1] # velociade do vento
@@ -46,7 +46,7 @@ M1 = np.matmul(aux, aux2)
 
 # vetor final com os resultados da camasda de saída
 y1 = np.matmul(M1,Z1)
-print(y1)
+
 
 #---------------------------------- 2 NEURÔNIOS
 
@@ -75,9 +75,8 @@ M = np.matmul(aux, aux2)
 
 # vetor final com os resultados da camada de saída
 y = np.matmul(M,Z)
-print(y)
 
-#---------------------------------- 3 NEURÔNIOs
+#---------------------------------- 3 NEURÔNIOS
 
 # vetor de pesos da camada oculta
 W3 = np.random.rand(q3, p+1) * 0.1 # matriz de pesos onde cada elemento varia num intervalo de (0,1) em uma distribuição uniforme
@@ -131,8 +130,43 @@ M4 = np.matmul(aux, aux2)
 # vetor final com os resultados da camasda de saída
 y4 = np.matmul(M3,Z3)
 
+#---------------------------------- Cálculo de R^2
+print('--> Cálculo do coeficiente de determinação \n--> q é o número de neurônios na camada o culta')
+# variáveis auxiliares
+soma1 = 0
+soma2 = 0
+media_y = np.mean(y_treino)  # média das amostras
 
-# Gráficos
+# q = 1
+R2_1N = 0
+for aux1,aux2 in itertools.zip_longest(y_treino.reshape((2250, 1)), y1.reshape((2250, 1))):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R2_1N = 1 - (soma1 / soma2)
+print('q = 1 -> R_2 = %f' % (R2_1N))
+
+# q = 2
+for aux1,aux2 in itertools.zip_longest(y_treino.reshape((2250, 1)), y.reshape((2250, 1))):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R2_2N = 1 - (soma1 / soma2)
+print('q = 2 -> R_2 = %f' % (R2_2N))
+
+# q = 3
+for aux1,aux2 in itertools.zip_longest(y_treino.reshape((2250, 1)), y3.reshape((2250, 1))):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R2_3N = 1 - (soma1 / soma2)
+print('q = 3 -> R_2 = %f' % (R2_3N))
+
+# q = 4
+for aux1,aux2 in itertools.zip_longest(y_treino.reshape((2250, 1)), y4.reshape((2250, 1))):
+    soma1 += (aux1 - aux2) ** 2
+    soma2 += (aux1 - media_y) ** 2
+R2_4N = 1 - (soma1 / soma2)
+print('q = 4 -> R_2 = %f' % (R2_4N))
+
+#---------------------------------- Gráficos
 
 # 1 NEURÔNIO
 plt.figure(2)
@@ -158,6 +192,13 @@ plt.ylabel('Potência')
 plt.xlabel('Velocidade do Vento')
 plt.title('Três neurônios na camada oculta')
 plt.grid(True)
-
+# 4 NEURÔNIOS
+plt.figure(4)
+plt.scatter(data[0:, 0:1], data[0:, 1:])   # amostras
+plt.plot(data[0:, 0:1], y4.transpose(), color = 'red') # rede neural
+plt.ylabel('Potência')
+plt.xlabel('Velocidade do Vento')
+plt.title('Quatro neurônios na camada oculta')
+plt.grid(True)
 
 plt.show()
