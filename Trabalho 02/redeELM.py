@@ -103,10 +103,10 @@ M3 = np.matmul(aux, aux2)
 # vetor final com os resultados da camasda de saída
 y3 = np.matmul(M3,Z3)
 
-#---------------------------------- 4 NEURÔNIOs
+#---------------------------------- 4 NEURÔNIOS
 
 # vetor de pesos da camada oculta
-W4 = np.random.rand(q4, p+1) # matriz de pesos onde cada elemento varia num intervalo de (0,1) em uma distribuição uniforme
+W4 = np.random.rand(q4, p+1) * 0.1 # matriz de pesos onde cada elemento varia num intervalo de (0,1) em uma distribuição uniforme
 
 # ativações dos neurônios da camada oculta
 u4 = np.matmul(W4, x_treino)
@@ -128,7 +128,7 @@ aux2 = np.linalg.inv(np.matmul(Z4, Z4.transpose()))
 M4 = np.matmul(aux, aux2)
 
 # vetor final com os resultados da camasda de saída
-y4 = np.matmul(M3,Z3)
+y4 = np.matmul(M4,Z4)
 
 #---------------------------------- Cálculo de R^2
 print('--> Cálculo do coeficiente de determinação \n--> q é o número de neurônios na camada o culta')
