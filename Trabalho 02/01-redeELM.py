@@ -71,6 +71,7 @@ Z = np.vstack((ones, Z)) # acrescenta uma linha de 1's
 aux = np.matmul(y_treino, Z.transpose())
 aux2 = np.linalg.inv(np.matmul(Z, Z.transpose()))
 M = np.matmul(aux, aux2)
+print(M.shape)
 
 # vetor final com os resultados da camada de saída
 y = np.matmul(M,Z)
