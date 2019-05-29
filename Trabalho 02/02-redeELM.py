@@ -6,6 +6,8 @@ import itertools
 
 
 data = np.loadtxt('./Trabalho 02/iris_log.dat')
+data = np.random.permutation(data) # embaralha as linhas
+
 x_treino = data[0:105, 0:4] # características (70% dos dados)
 x_treino = x_treino.transpose()
 ones = np.ones(x_treino.shape[1])
@@ -54,8 +56,8 @@ x_teste = x_teste.transpose()
 ones = np.ones(x_teste.shape[1])
 x_teste = np.vstack((ones, x_teste))
 
-y_teste = data[105:, 4:] # (30% dos dados)
-y_teste = y_teste.transpose()
+y = data[105:, 4:] # (30% dos dados)
+y = y.transpose()
 
 u_teste = np.matmul(W,x_teste)
 
@@ -70,5 +72,14 @@ Z_teste = np.vstack((ones, Z_teste))
 
 Y_teste = np.matmul(M, Z_teste)
 
-for i in range(0, Y.shape[1]):
-    print(Y[0:, i:i+1])
+cont = 0 # conta a quantidade de acertos
+for i in range(0, Y_teste.shape[1]):
+    aux1 = Y_teste[0:, i:i+1]
+    aux2 = y[0:, i:i+1]
+    index1 = np.where(aux1 == np.amax(aux1))
+    index2 = np.where(aux2 == np.amax(aux2))
+    if index1[0]==index2[0]: #compara se os índices do maior número coincidem
+        cont += 1
+#porcentagem de acerto:
+p = (cont / y.shape[1]) * 100
+print('Porcentagem de acerto da rede: %8.3f %%' % (p))
