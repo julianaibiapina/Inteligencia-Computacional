@@ -30,7 +30,7 @@ rotulo = data[0:, 2:3]
 rotulo = rotulo.transpose() # transforma em um vetor colunas
 
 # q = quantidade de neurônios
-q = 20
+q = 10
 # p = quantidade de variáveis de entrada
 p = 2
 
