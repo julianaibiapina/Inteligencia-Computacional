@@ -4,8 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
 
 
 
@@ -56,19 +54,27 @@ aux2 = np.linalg.inv(np.matmul(Z, Z.transpose()))
 M = np.matmul(aux1, aux2)
 
 # Vetor de saídas calculadas pelo modelo
-Y = np.matmul(M, Z)
+#Y = np.matmul(M, Z)
 
+#-------------------------------Classificador-----------------------------------
+# invetvalo de x1
+min1 = np.amin(x_1Plot)
+max1 = np.amax(x_1Plot)
+# invetvalo de x2
+min2 = np.amin(x_2Plot)
+max2 = np.amax(x_2Plot)
+
+j1 = np.linspace(min1, max1, 100)
+j2 = np.linspace(min2, max2, 100)
+
+vet = np.vstack((j1, j2))
+vet = vet.transpose()
 
 
 # CLASSE A
-ax.scatter(x_1Plot[0:501], x_2Plot[0:501], rotuloPlot[0:501], c='r', marker='o')
+plt.figure(1)
+plt.scatter(x_1Plot[0:501], x_2Plot[0:501],  c='r', s=7)
 # CLASSE B
-ax.scatter(x_1Plot[501:], x_2Plot[501:], rotuloPlot[501:], c='b', marker='^')
-#Classificação da Rede ELM
-ax.scatter(data[0:, 0:1], data[0:, 1:2], Y[0:], c='g', marker='^')
+plt.scatter(x_1Plot[501:], x_2Plot[501:],  c='b', s=7)
 
-
-ax.set_xlabel('x1')
-ax.set_ylabel('x2')
-ax.set_zlabel('Rótulo')
-plt.show()
+#plt.show()

@@ -46,7 +46,7 @@ error = np.linalg.norm(centers_new - centers_old)
 while error != 0:
     # Measure the distance to every center
     for i in range(k):
-        distances[:,i] = np.linalg.norm(data - centers[i], axis=1)
+        distances[:,i] = np.linalg.norm(data - centers_new[i], axis=1)
     # Assign all training data to closest center
     clusters = np.argmin(distances, axis = 1)
 

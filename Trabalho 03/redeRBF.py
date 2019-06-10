@@ -13,10 +13,6 @@ x = np.array([[1,1], [0, 1], [0, 0], [1, 0]])
 d = np.array([0, 1, 0, 1])
 
 
-# aux1 = np.linalg.norm(np.subtract(x[1],t1))
-# fi1.append(math.exp(-aux1 ** 2))
-# aux2 = np.linalg.norm(np.subtract(x[1],t2))
-# fi2.append(math.exp(-aux2 ** 2))
 fi1 = list()
 fi2 = list()
 for v in x:
