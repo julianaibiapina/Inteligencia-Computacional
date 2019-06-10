@@ -39,6 +39,8 @@ W = np.random.rand(q, p+1) * 0.1
 # ativações dos neurônios da camada oculta
 u = np.matmul(W, x_treino)
 
+
+
 # Vetor Z de saídas da camada oculta
 Z = np.empty(u.shape)
 for i in range(0, u.shape[0]):
@@ -64,12 +66,13 @@ max1 = np.amax(x_1Plot)
 min2 = np.amin(x_2Plot)
 max2 = np.amax(x_2Plot)
 
+vetor = np.empty((100*100, 2))
+
 j1 = np.linspace(min1, max1, 100)
 j2 = np.linspace(min2, max2, 100)
 
-vet = np.vstack((j1, j2))
-vet = vet.transpose()
-
+# PAREI AQUI!
+for i in range()
 
 # CLASSE A
 plt.figure(1)
