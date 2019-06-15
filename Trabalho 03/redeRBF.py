@@ -2,6 +2,7 @@ import math
 import random
 import numpy as np
 
+# Caso referente a porta lógica XOR
 
 #centros
 t1 = np.array([1, 1])

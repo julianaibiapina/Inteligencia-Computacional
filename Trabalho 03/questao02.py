@@ -4,45 +4,45 @@ import numpy as np
 import matplotlib.pyplot as plt
 from copy import deepcopy
 
-
-#-------------------------------Definir Centros---------------------------------
 data = np.loadtxt('./Trabalho 03/iris_log.dat')
 
+#-------------------------------Definir Centros---------------------------------
 data_centros = data[0:, 0:4]
 
-# Number of clusters
+# Número de clusters
 k = 3
-# Number of training data
+# Número de dados para treino
 n = data_centros.shape[0]
-# Number of features in the data
+# Número de variáveis
 c = data_centros.shape[1]
 
-# Generate random centers, here we use sigma and mean to ensure it represent the whole data
-mean = np.mean(data_centros, axis = 0)
-std = np.std(data_centros, axis = 0)
-centers = np.random.randn(k,c)*std + mean
+# Encontra três pontos aleatórios dentro do conjunto de dados para serem os centros iniciais
+centers = np.empty((k,c))
+for i in range(0,k):
+    centers[i] = data_centros[random.randint(0,n)]
 
 
-centers_old = np.zeros(centers.shape) # to store old centers
-centers_new = deepcopy(centers) # Store new centers
+centers_old = np.zeros(centers.shape) # amazena os centros antigos
+centers_new = deepcopy(centers) # guarda os novos centros
 
 clusters = np.zeros(n)
 distances = np.zeros((n,k))
 
 error = np.linalg.norm(centers_new - centers_old)
 
-# When, after an update, the estimate of that center stays the same, exit loop
+# quando os centros não mudam mais então sai do loop
 while error != 0:
-    # Measure the distance to every center
+    # Calcula a distância para cada centro
     for i in range(k):
         distances[:,i] = np.linalg.norm(data_centros - centers_new[i], axis=1)
 
-    # Assign all training data to closest center
+
+    # associa cada dado de treinamento ao centro mais próximo dele
     clusters = np.argmin(distances, axis = 1)
 
 
     centers_old = deepcopy(centers_new)
-    # Calculate mean for every cluster and update the center
+    # Calcula a média para cada cluster e atualiza os seus respectivos centros
     for i in range(k):
         centers_new[i] = np.mean(data_centros[clusters == i], axis=0)
     error = np.linalg.norm(centers_new - centers_old)
@@ -52,13 +52,20 @@ t1 = centers_new[0:1, 0:]
 t2 = centers_new[1:2, 0:]
 t3 = centers_new[2:3, 0:]
 
-# embalhara os dados
-data = np.random.permutation(data)
-# entradas
-x = data[0:, 0:4]
-# saídas desejadas
-d = data[0:, 4:]
 
+# ----------------------RBF-----------------------------------------------------
+
+
+data = np.random.permutation(data) # embalhara os dados
+data_treino = data[0:120, 0:]      # dados de treino
+data_teste = data[120:, 0:]        # dados de teste
+
+# entradas
+x = data_treino[0:, 0:4]
+# saídas desejadas
+d = data_treino[0:, 4:]
+
+# ----------------------------------TREINO--------------------------------------
 fi1 = list()
 fi2 = list()
 fi3 = list()
@@ -89,6 +96,32 @@ G = G.transpose()
 aux = np.linalg.inv(np.matmul(G.transpose(), G))
 G_mais = np.matmul(aux, G.transpose())
 
-# Cálculo de w, o vetor de pesos da cadada de saída
+# Cálculo de w, o vetor de pesos da camada de saída
 w = np.matmul(G_mais, d)
-print(w)
+
+
+# ----------------------------------TESTE---------------------------------------
+
+# entradas
+x_teste = data_teste[0:, 0:4]
+
+fi1_t = list()
+fi2_t = list()
+fi3_t = list()
+
+for v in x_teste:
+    aux1 = np.linalg.norm(np.subtract(v,t1))
+    fi1_t.append(math.exp(-aux1 ** 2))
+
+    aux2 = np.linalg.norm(np.subtract(v,t2))
+    fi2_t.append(math.exp(-aux2 ** 2))
+
+    aux3 = np.linalg.norm(np.subtract(v,t3))
+    fi3_t.append(math.exp(-aux3 ** 2))
+
+
+fi1_t = np.array(fi1_t)
+fi2_t = np.array(fi2_t)
+fi3_t = np.array(fi3_t)
+
+print(fi1_t.shape)
