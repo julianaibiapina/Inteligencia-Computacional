@@ -30,10 +30,16 @@ ones = np.ones(fi1.shape)
 G = np.vstack((G, ones))
 G = G.transpose()
 
+
 # Cálculo da pseudo-inversa da matrig G
 aux = np.linalg.inv(np.matmul(G.transpose(), G))
 G_mais = np.matmul(aux, G.transpose())
 
 # Cálculo de w, o vetor de pesos da cadada de saída
 w = np.matmul(G_mais, d)
-print(w)
+# print(w)
+
+# cálculo no meu vetor de saídas
+d_rede = np.matmul(G,w)
+print(d_rede[3])
+print(d)

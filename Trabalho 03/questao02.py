@@ -16,6 +16,7 @@ n = data_centros.shape[0]
 # Número de variáveis
 c = data_centros.shape[1]
 
+
 # Encontra três pontos aleatórios dentro do conjunto de dados para serem os centros iniciais
 centers = np.empty((k,c))
 for i in range(0,k):
@@ -85,25 +86,32 @@ fi1 = np.array(fi1)
 fi2 = np.array(fi2)
 fi3 = np.array(fi3)
 
-
+# cálculo da matriz G
 G = np.vstack((fi1, fi2))
 G = np.vstack((G, fi3))
 ones = np.ones(fi1.shape)
 G = np.vstack((G, ones))
 G = G.transpose()
 
-# Cálculo da pseudo-inversa da matriz G
+
+# Cálculo da pseudo-inversa da matriz G: G_mais
 aux = np.linalg.inv(np.matmul(G.transpose(), G))
 G_mais = np.matmul(aux, G.transpose())
 
 # Cálculo de w, o vetor de pesos da camada de saída
 w = np.matmul(G_mais, d)
 
+# y = np.matmul(G, w)
+# print(np.argmax(y, axis=1))
+# print(np.argmax(d, axis=1))
 
 # ----------------------------------TESTE---------------------------------------
 
 # entradas
 x_teste = data_teste[0:, 0:4]
+
+# saídas esperadas
+d_teste = data_teste[0:, 4:]
 
 fi1_t = list()
 fi2_t = list()
@@ -124,4 +132,15 @@ fi1_t = np.array(fi1_t)
 fi2_t = np.array(fi2_t)
 fi3_t = np.array(fi3_t)
 
-print(fi1_t.shape)
+# cálculo da matriz G
+G_teste = np.vstack((fi1_t, fi2_t))
+G_teste = np.vstack((G_teste, fi3_t))
+ones = np.ones(fi1_t.shape)
+G_teste = np.vstack((G_teste, ones))
+G_teste = G_teste.transpose()
+
+y = np.matmul(G_teste, w)
+resultado_rede = np.argmax(y, axis=1)
+resultado_esperado = np.argmax(d_teste, axis=1)
+print(resultado_rede)
+print(resultado_esperado)
