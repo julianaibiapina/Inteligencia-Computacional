@@ -24,7 +24,7 @@ for i in range(0,k):
     centers[i] = data_centros[random.randint(0,n-1)]
 
 
-centers_old = np.zeros(centers.shape) # amazena os centros antigos
+centers_old = np.zeros(centers.shape) # armazena os centros antigos
 centers_new = deepcopy(centers) # guarda os novos centros
 
 clusters = np.zeros(n)
@@ -32,7 +32,7 @@ distances = np.zeros((n,k))
 
 error = np.linalg.norm(centers_new - centers_old)
 
-# quando os centros não mudam mais então sai do loop
+# quando ocenters_new == centers_old então sai do loop
 while error != 0:
     # Calcula a distância para cada centro
     for i in range(k):
@@ -154,4 +154,4 @@ for j in range(0, 50):
     media.append(cont)
     #print('Porcentagem de acertos: %8.4f %%' % (cont))
 
-print('Média de acertos: %8.3f \nValor máximo: %8.3f \nValor mínimo: %8.3f'%  (mean(media), max(media), min(media)))
+print('Média de acertos: %8.3f %% \nValor máximo: %8.3f %% \nValor mínimo: %8.3f %%'%  (mean(media), max(media), min(media)))
