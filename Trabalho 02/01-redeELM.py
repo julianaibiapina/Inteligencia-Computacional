@@ -201,4 +201,4 @@ plt.xlabel('Velocidade do Vento')
 plt.title('Quatro neurônios na camada oculta')
 plt.grid(True)
 
-plt.show()
+#plt.show()
