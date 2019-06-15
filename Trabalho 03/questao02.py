@@ -154,4 +154,4 @@ for j in range(0, 50):
     media.append(cont)
     #print('Porcentagem de acertos: %8.4f %%' % (cont))
 
-print('Média de acertos: %8.3f %% \nValor máximo: %8.3f %% \nValor mínimo: %8.3f %%'%  (mean(media), max(media), min(media)))
+print('Média de acertos: %8.2f %% \nValor máximo: %8.2f %% \nValor mínimo: %8.2f %%'%  (mean(media) * 100, max(media)* 100, min(media)* 100))
