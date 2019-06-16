@@ -109,8 +109,7 @@ result_teste = list()
 cont1 = 0
 cont2 = 0
 for i in Y_teste[0]:
-    if i>-0.5 and i<0.5:
-        print(i)
+
     if i>0:
         result_teste.append(1)
         cont1 += 1
@@ -121,17 +120,23 @@ for i in Y_teste[0]:
 
 result_teste = np.array(result_teste)
 result_teste = result_teste.reshape((10000, 1))
-print(result_teste.shape)
 
 
 
-# -------------- Gráfico
-# OBS: colocar título no gráfico.
 
-plt.figure(1) # plot do teste com os dados de treinamento
-plt.scatter(data[0:, 0:1], data[0:, 1:2],  c=result, s=7)
-plt.figure(2) # plot dos dados originais
+# -------------- Gráficos------------------------
+
+#plt.figure(3) # plot do teste com os dados de treinamento
+#plt.scatter(data[0:, 0:1], data[0:, 1:2],  c=result, s=7)
+plt.figure(1) # plot dos dados originais
 plt.scatter(data[0:, 0:1], data[0:, 1:2],  c=data[0:, 2:3], s=7)
-plt.figure(3) # plot dos dados originais
+plt.ylabel('X2')
+plt.xlabel('X1')
+plt.title('Dados classificados por cores')
+plt.figure(2) # plot dos dados de teste
 plt.scatter(aux[0:, 0:1], aux[0:, 1:2],  c=result_teste, s=7)
+plt.ylabel('X2')
+plt.xlabel('X1')
+plt.title('Superfície de decisão')
+
 plt.show()
